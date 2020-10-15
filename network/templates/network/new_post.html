@@ -1,0 +1,21 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<h2 id="newpost">{{user.username| title}} :</h2>
+<div class="posting">
+
+    <form action="{% url 'post' %}" method="POST">
+
+        {% csrf_token %}
+        {{ newPost }}
+
+        <input class="boton btn-lg btn btn-primary" type="submit" value="Post">
+
+    </form>
+</div>
+
+<small style="color: grey;">Others might understand what they want to understand from your words, so please, be as precise as possible ;) </small>
+
+{% endblock %}

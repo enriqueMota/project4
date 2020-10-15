@@ -1,0 +1,59 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<h2 class="post-pages">All Posts</h2>
+
+<div class="posts">
+    {% for post in posts %}
+    <div class="post-container">
+        <a href="{% url 'profile' post.author %}"><b>{{ post.author }}</b></a>
+        <small hidden id="aydi">{{post.id}}</small>
+        <br>
+        <p>{{ post.body }}</p>
+        <p>{{ post.timestamp }}</p>
+        {% if post.id in likes %}
+        <p id="likes"><i style="color: red;" class="fas fa-heart"></i> {{ post.likes.all.count }}</p>
+        {% else %}
+        <p id="likes"><i class="far fa-heart"></i> {{ post.likes.all.count }}</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+<nav aria-label="...">
+    <ul class="pagination justify-content-center">
+
+        <!-- #region PREVIOUS -->
+        {% if not posts.has_previous%}
+        <li class="page-item disabled">
+            <span class="page-link">Previous</span>
+        </li>
+        {% elif posts.has_previous%}
+        <li class="page-item">
+            <a href="?page={{ posts.previous_page_number }}" class="page-link">Previous</a>
+        </li>
+        {% endif %}
+        <!--endregion-->
+        <!-- #region NUMBERS -->
+        {% for number in page_links %}
+        <li class="page-item"><a href="?page={{ number }}" class="page-link">{{ number }}</a></li>
+        {% endfor %}
+        <!-- #endregion -->
+        <!--#region NEXT  -->
+        {% if posts.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ posts.next_page_number }}">Next</a>
+        </li>
+        {% elif not posts.has_next %}
+        <li class="page-item disabled">
+            <span class="page-link">Next</span>
+        </li>
+        {% endif %}
+        <!--#endregion -->
+        <!-- Fin -->
+    </ul>
+</nav>
+
+{% endblock %}
