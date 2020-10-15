@@ -3,80 +3,80 @@
 
 
 {% block body %}
-<h1><strong id="strong">{{ username }}</strong></h1>
-<div id="follow_counter">
-    <h4 id="asyc">Followers: {{ followers }}</h4>
-    <h4>Following: {{ following }}</h4>
-</div>
+    <h1><strong id="strong">{{ username }}</strong></h1>
+    <div id="follow_counter">
+        <h4 id="asyc">Followers: {{ followers }}</h4>
+        <h4>Following: {{ following }}</h4>
+    </div>
 
      {% if user.is_authenticated %}
           {% if username != user.username %}
                {%if follows %}
-<a id="follow" class="btn btn-primary" href="#">Unfollow</a>
+                    <a id="follow" class="btn btn-primary" href="#">Unfollow</a>
                {% else%}
-<a id="follow" class="btn btn-primary" href="#">Follow</a>
+                    <a id="follow" class="btn btn-primary" href="#">Follow</a>
                {% endif %}
           {% endif %}
      {% endif %}
 
 
-<div class="posts">
-    {% for post in posts %}
-        <div class="post-container">
-            <h5 id="author">{{ post.author }}</h5>
-            <small hidden id="aydi">{{post.id}}</small>
-            {% if user == post.author %}
-                <a id="edit">Edit</a>
-            {% endif %}
-            <p id="body">{{ post.body }}</p>
-            <div id="edition">
-                <textarea class="form-control" name="boy" id="text" cols="20" rows="5">{{post.body}}</textarea>
-                <input id="update" class="btn btn-primary boton" value="Update">
+    <div class="posts">
+        {% for post in posts %}
+            <div class="post-container">
+                <h5 id="author">{{ post.author }}</h5>
+                <small hidden id="aydi">{{post.id}}</small>
+                {% if user == post.author %}
+                    <a id="edit">Edit</a>
+                {% endif %}
+                <p id="body">{{ post.body }}</p>
+                <div id="edition">
+                    <textarea class="form-control" name="boy" id="text" cols="20" rows="5">{{post.body}}</textarea>
+                    <input id="update" class="btn btn-primary boton" value="Update">
+                </div>
+                <p>{{ post.timestamp }}</p>
+                {% if post.id in likes %}
+                    <p id="likes"><i style="color: red;" class="fas fa-heart"></i> {{ post.likes.all.count }}</p>
+                {% else %}
+                    <p id="likes"><i class="far fa-heart"></i> {{ post.likes.all.count }}</p>
+                {% endif %}
             </div>
-            <p>{{ post.timestamp }}</p>
-            {% if post.id in likes %}
-            <p id="likes"><i style="color: red;" class="fas fa-heart"></i> {{ post.likes.all.count }}</p>
-            {% else %}
-            <p id="likes"><i class="far fa-heart"></i> {{ post.likes.all.count }}</p>
-            {% endif %}
-        </div>
-    {% endfor %}
-</div>
+        {% endfor %}
+    </div>
 
 
      {%if page_links %}
-<nav aria-label="...">
-    <ul class="pagination justify-content-center">
+        <nav aria-label="...">
+            <ul class="pagination justify-content-center">
 
-        <!-- #region PREVIOUS -->
-        {% if not posts.has_previous%}
-        <li class="page-item disabled">
-            <span class="page-link">Previous</span>
-        </li>
-        {% elif posts.has_previous%}
-        <li class="page-item">
-            <a href="?page={{ posts.previous_page_number }}" class="page-link">Previous</a>
-        </li>
-        {% endif %}
-        <!--endregion-->
-        <!-- #region NUMBERS -->
-        {% for number in page_links %}
-        <li class="page-item"><a href="?page={{ number }}" class="page-link">{{ number }}</a></li>
-        {% endfor %}
-        <!-- #endregion -->
-        <!--#region NEXT  -->
-        {% if posts.has_next %}
-        <li class="page-item">
-            <a class="page-link" href="?page={{ posts.next_page_number }}">Next</a>
-        </li>
-        {% elif not posts.has_next %}
-        <li class="page-item disabled">
-            <span class="page-link">Next</span>
-        </li>
-        {% endif %}
-        <!--#endregion -->
-        <!-- Fin -->
-    </ul>
-</nav>
+                <!-- #region PREVIOUS -->
+                {% if not posts.has_previous%}
+                    <li class="page-item disabled">
+                        <span class="page-link">Previous</span>
+                    </li>
+                {% elif posts.has_previous%}
+                    <li class="page-item">
+                        <a href="?page={{ posts.previous_page_number }}" class="page-link">Previous</a>
+                    </li>
+                {% endif %}
+                <!--endregion-->
+                <!-- #region NUMBERS -->
+                {% for number in page_links %}
+                    <li class="page-item"><a href="?page={{ number }}" class="page-link">{{ number }}</a></li>
+                {% endfor %}
+                <!-- #endregion -->
+                <!--#region NEXT  -->
+                {% if posts.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ posts.next_page_number }}">Next</a>
+                    </li>
+                {% elif not posts.has_next %}
+                    <li class="page-item disabled">
+                        <span class="page-link">Next</span>
+                    </li>
+                {% endif %}
+                <!--#endregion -->
+                <!-- Fin -->
+            </ul>
+        </nav>
      {% endif %}
 {% endblock %}

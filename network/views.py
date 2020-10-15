@@ -19,8 +19,6 @@ class NewPost(forms.Form):
 def index(request):
 
     if request.user.is_authenticated:    
-
-
         posts = Post.objects.all()
         posts = posts.order_by("-timestamp").all()
 
@@ -47,7 +45,7 @@ def index(request):
                 'likes': liked_posts
             })
 
-        elif posts.count() > 10:
+        elif posts.count() <= 10:
 
             return render(request, "network/index.html", {
                 "logged": True,
