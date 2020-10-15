@@ -47,7 +47,7 @@ def index(request):
                 'likes': liked_posts
             })
 
-        elif posts.count() > 10:
+        elif posts.count() <= 10:
 
             return render(request, "network/index.html", {
                 "logged": True,
