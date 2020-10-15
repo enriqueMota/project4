@@ -83,7 +83,7 @@ DATABASES = {
         'HOST': 'network-project.database.windows.net',
         'PORT': '',
         'OPTIONS': {
-            'driver':'ODBC Driver 13 for SQL Server',
+            'driver':'ODBC Driver 17 for SQL Server',
             'MARS_Connection':'True'
         },
     }
